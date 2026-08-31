@@ -1,0 +1,11 @@
+VeriFlow
+Copyright (c) 2025-2026 Amr Elnaggar. All rights reserved where not licensed.
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Portions of the claim-binding and trust-proof mechanism are the subject of
+USPTO provisional patent application No. 63/940,036. The Apache-2.0 license
+grant (Section 3) applies to the patent claims embodied in this work as
+distributed here.
+
+Prior work: DCER+PXB, published on Zenodo (DOI: 10.5281/zenodo.18047498).
