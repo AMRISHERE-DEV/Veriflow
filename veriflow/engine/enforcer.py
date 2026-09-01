@@ -133,6 +133,15 @@ def enforce(
         reasons.append("status is releasable but no non-LLM definitive verifier backs it "
                        "- escalating instead of releasing (defense in depth)")
 
+    # Invariant 2, release-layer floor: support whose every stance is model-assigned
+    # is context, never a releasable conclusion.
+    if (getattr(certification, "model_derived_support_only", False)
+            and RESTRICTIVENESS[decision] < RESTRICTIVENESS[ReleaseDecision.REQUIRE_CLARIFICATION]):
+        decision = ReleaseDecision.REQUIRE_CLARIFICATION
+        tier = max(tier, 3)
+        reasons.append("all supporting evidence stances are model-derived "
+                       "- floored below release")
+
     # Advisories can only raise restrictiveness (invariant 2).
     for adv in proposed.advisories:
         floor, atier = _advisory_floor(adv.severity)

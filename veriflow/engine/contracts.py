@@ -96,6 +96,10 @@ class Certification:
     record_hash: str = ""             # manifest/accession hash - the replay anchor
     detail: str = ""
     reasons: tuple = ()
+    # True when every supporting stance behind this status was model-assigned
+    # (kernel decide_status/compose propagate this); the enforcer floors such
+    # certifications below release.
+    model_derived_support_only: bool = False
 
 
 # --------------------------------------------------------------------------- #

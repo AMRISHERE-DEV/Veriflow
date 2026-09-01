@@ -105,6 +105,8 @@ def _premise_decision(premise: EngineResult, now: datetime) -> StatusDecision:
         contested=(st is EvidenceStatus.CONTESTED),
         support_lineages=0,
         has_definitive_pass=premise.certification.definitive_nonllm,
+        model_derived_support_only=getattr(
+            premise.certification, "model_derived_support_only", False),
         reasons=premise.certification.reasons,
         decided_at=now,
     )
@@ -227,6 +229,7 @@ def synthesize(
         record_hash=graph_hash,
         detail="weakest-link conjunction; conclusion capped at its own verifiability ceiling",
         reasons=composed.reasons,
+        model_derived_support_only=getattr(composed, "model_derived_support_only", False),
     )
     decision, tier, receipt, reasons = enforce(concl_claim, cert, signing_key=signing_key)
     return ConclusionResult(

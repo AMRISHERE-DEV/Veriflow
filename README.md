@@ -47,7 +47,7 @@ Seven evidence statuses, minted only by the kernel (`veriflow.verify.decide_stat
 | --- | --- | --- |
 | `VERIFIED` | Non-LLM definitive verifier passed, claim binding checked and trusted, no credible contradiction | Allow |
 | `CORROBORATED` | ≥ 2 independent, provenance-bound source lineages support the claim, no credible contradiction | Allow with notice |
-| `SUPPORTED` | 1 admissible supporting lineage, no credible contradiction | Allow with notice |
+| `SUPPORTED` | 1 admissible supporting lineage, no credible contradiction | Require clarification (one lineage is context, not release-grade support) |
 | `CONTESTED` | Credible support and credible contradiction coexist | Escalate for review |
 | `UNVERIFIED` | Required evidence or verifier result absent or inadmissible; could-not-check is not negative evidence | Require clarification |
 | `EXPIRED` | A formerly positive, time-limited status whose TTL lapsed; must be re-verified | Require clarification |
