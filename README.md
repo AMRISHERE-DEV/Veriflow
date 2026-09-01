@@ -165,6 +165,12 @@ forward as a standalone engine: the same separation of model reasoning from evid
 hardened into the non-LLM `VERIFIED` gate, trusted content-bound binding proofs, and the
 abstention-first release policy documented here.
 
+## Citing
+
+Whitepaper (preprint v1.4): Elnaggar, A. (2026). *VeriFlow: A Containment-First
+Architecture for Evidence-Gated Release of Language-Model Claims.* Zenodo.
+DOI [10.5281/zenodo.22233268](https://doi.org/10.5281/zenodo.22233268).
+
 ## License
 
 Apache License 2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
