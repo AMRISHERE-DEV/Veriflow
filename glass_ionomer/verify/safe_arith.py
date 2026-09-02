@@ -116,8 +116,11 @@ def _numeric(
             return float(value)
         # Relation literals use exact decimal rationals. This preserves ordinary
         # decimal identities such as 0.1 + 0.2 == 0.3 without a magnitude-scaled
-        # tolerance that can collapse materially distinct large values.
-        return Fraction(str(value)) if isinstance(value, float) else value
+        # tolerance that can collapse materially distinct large values. Integers
+        # become rationals too, so int/int division stays exact instead of
+        # producing a float that is then compared against an exact rational
+        # (Class 6: '1 / 10 = 0.1' was REFUTED and '1 / 10 > 0.1' VERIFIED).
+        return Fraction(str(value)) if isinstance(value, float) else Fraction(value)
 
     if isinstance(node, ast.Name):
         if variables is None or node.id not in variables:
@@ -137,6 +140,12 @@ def _numeric(
             right, _MAX_POW_EXPONENT
         ):
             raise ArithmeticBoundError(f"exponent magnitude exceeds cap ({_MAX_POW_EXPONENT})")
+        if (isinstance(node.op, ast.Pow) and not as_float
+                and isinstance(right, Fraction) and right.denominator != 1):
+            # A non-integer exponent is not exactly computable in rationals; Python
+            # would silently fall back to float. Abstain rather than certify or
+            # refute on float luck.
+            raise ArithmeticBoundError("non-integer exponent is not exactly computable")
         result = _bound_operand(binops[type(node.op)](left, right))
         return float(result) if as_float else result
 

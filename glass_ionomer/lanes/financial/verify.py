@@ -288,6 +288,11 @@ def verify_financial_claim(claim: FinancialClaim, companyfacts: dict,
     if claim.fiscal_year is None or claim.fiscal_period is None:
         return unverified("period not fully specified (fiscal_year and fiscal_period required) - "
                           "cannot bind to an exact filed entry")
+    if claim.cik is None and claim.ticker:
+        # Class 7: a ticker is an entity assertion; without a resolved CIK the
+        # entity is unbound and the record cannot be checked against it.
+        return unverified(f"entity unbound: ticker {claim.ticker!r} given without a resolved CIK "
+                          "- resolve ticker->CIK before verification")
     if claim.cik is not None:
         claim_cik = _norm_cik(claim.cik)
         record_cik = _norm_cik((companyfacts or {}).get("cik"))

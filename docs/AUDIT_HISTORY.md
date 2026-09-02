@@ -97,6 +97,38 @@ Public pins: `tests/test_financial_period_fallback.py`
 (offset_fiscal_calendar_cannot_mint_wrong_period_verified,
 own_period_rows_are_never_fallback_candidates).
 
+## Class 6 - Float leakage in the exact-rational arithmetic lane (found by kernel-benchmark design review, 2026-09-03)
+
+Decimal literals were converted to exact rationals but integer literals were
+not, so integer division produced a float that was then compared against an
+exact rational: on v1.1.1, `1 / 10 = 0.1` was REFUTED and `1 / 10 > 0.1` was
+VERIFIED - wrong-direction definitive verdicts on the README quickstart path,
+the mirror image of Class 1. Non-integer exponents also fell back to float
+silently, refuting true identities such as `(2 ** 0.5) ** 2 = 2`.
+
+Fix (v1.1.2): every relation literal is an exact rational, so division is
+exact end to end; a non-integer exponent is declared not exactly computable
+and the verifier abstains (UNVERIFIED) rather than certifying or refuting on
+float luck.
+
+Public pins: `tests/test_arith_exact_rational.py`.
+
+## Class 7 - Ticker without CIK never bound the entity (found by kernel-benchmark design review, 2026-09-03)
+
+The financial lane compared CIKs only when the claim carried one. A claim
+naming a ticker but no CIK, with a trusted text->concept binding proof,
+verified against ANOTHER filer's trusted companyfacts whose same concept and
+period held the same value - and the engine released it (VERIFIED / ALLOW /
+tier 0). GCAB never saw this because its runner always supplies the CIK.
+
+Fix (v1.1.2): a ticker is an entity assertion; if present without a resolved
+CIK the entity is unbound and the claim stays UNVERIFIED with an explicit
+reason. Claims carrying a CIK are unchanged. Whether entity-less tuple claims
+(no ticker, no CIK) should also require an entity is recorded as an open
+ratification item for the kernel benchmark, not changed silently.
+
+Public pins: `tests/test_entity_binding.py`.
+
 ## Scope note
 
 The audits above were author-conducted; no external party has yet audited this
