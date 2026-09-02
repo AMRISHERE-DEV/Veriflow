@@ -1,8 +1,8 @@
 """Shared bounded arithmetic evaluation utilities.
 
 This module is stdlib-only and intentionally small. It supports two callers:
-mechanical relation verification in ``veriflow.verify`` and variable-bound
-expression evaluation in ``veriflow.spine``.
+mechanical relation verification in ``project_saturn.verify`` and variable-bound
+expression evaluation in ``project_saturn.spine``.
 """
 from __future__ import annotations
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 import dataclasses
 import unittest
 
-from veriflow.engine import (
+from project_saturn.engine import (
     ProposedClaim,
     ReleaseDecision,
     assure,
@@ -20,10 +20,10 @@ from veriflow.engine import (
     synthesize,
     verify_conclusion,
 )
-from veriflow.lanes.financial import issue_trusted_companyfacts
-from veriflow.lanes.financial.models import financial_binding_subject
-from veriflow.verify.status import VerifiabilityClass
-from veriflow.verify.trust import issue_trusted_binding_proof
+from project_saturn.lanes.financial import issue_trusted_companyfacts
+from project_saturn.lanes.financial.models import financial_binding_subject
+from project_saturn.verify.status import VerifiabilityClass
+from project_saturn.verify.trust import issue_trusted_binding_proof
 
 REV = "RevenueFromContractWithCustomerExcludingAssessedTax"
 NI = "NetIncomeLoss"

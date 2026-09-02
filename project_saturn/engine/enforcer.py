@@ -21,7 +21,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 
-from veriflow.verify.status import EvidenceStatus
+from project_saturn.verify.status import EvidenceStatus
 
 from .contracts import (
     DISCLAIMER,
@@ -182,7 +182,7 @@ def verify_receipt(receipt: Receipt, *, signing_key: str | bytes | None = None,
         }
     except (AttributeError, TypeError, ValueError):
         return False
-    hash_fn = legacy_canonical_hash if receipt.engine_version == "veriflow.engine.v1" else canonical_hash
+    hash_fn = legacy_canonical_hash if receipt.engine_version == "project_saturn.engine.v1" else canonical_hash
     if hash_fn(content) != receipt.receipt_hash:
         return False
     if signing_key is not None:

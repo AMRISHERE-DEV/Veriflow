@@ -9,7 +9,7 @@ from __future__ import annotations
 import unittest
 from dataclasses import replace
 
-from veriflow.engine import (
+from project_saturn.engine import (
     AdvisorySignal,
     ReleaseDecision,
     Severity,
@@ -17,13 +17,13 @@ from veriflow.engine import (
     propose_logic,
     verify_receipt,
 )
-from veriflow.lanes.logic.verify import (
+from project_saturn.lanes.logic.verify import (
     LogicClaim,
     logic_binding_subject,
     verify_logic_claim,
 )
-from veriflow.verify.status import EvidenceStatus
-from veriflow.verify.trust import issue_trusted_binding_proof
+from project_saturn.verify.status import EvidenceStatus
+from project_saturn.verify.trust import issue_trusted_binding_proof
 
 TRUSTED_BINDING = object()
 

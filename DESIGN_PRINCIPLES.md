@@ -1,15 +1,15 @@
-# VeriFlow Engineering Constitution
+# Project Saturn Engineering Constitution
 
 This document is normative. It defines the architecture of this public cut and
 the standard used to accept changes.
 
 ## Product objective
 
-VeriFlow examines a question, separates its checkable claims, records admissible
+Project Saturn examines a question, separates its checkable claims, records admissible
 evidence, assigns bounded evidence statuses, and decides whether the resulting
 answer may be released. It must make uncertainty and dissent visible.
 
-VeriFlow is not a truth oracle. A status describes what the configured evidence
+Project Saturn is not a truth oracle. A status describes what the configured evidence
 and verifier proved within a recorded scope and time.
 
 ## Two flows, one boundary
@@ -36,10 +36,10 @@ Each policy has one owner:
 
 | Concern | Owner |
 | --- | --- |
-| Evidence admission and status | `veriflow.verify` |
-| Source resolution and resolver-owned bytes | `veriflow.verify.resolver` |
-| Release action and receipt | `veriflow.engine.enforcer` |
-| Deterministic domain mechanisms | `veriflow.lanes` |
+| Evidence admission and status | `project_saturn.verify` |
+| Source resolution and resolver-owned bytes | `project_saturn.verify.resolver` |
+| Release action and receipt | `project_saturn.engine.enforcer` |
+| Deterministic domain mechanisms | `project_saturn.lanes` |
 
 Do not duplicate these policies in entry points, adapters, or convenience
 facades. A new abstraction must remove real complexity or enforce a boundary.

@@ -2,7 +2,7 @@
 
 **Sole human author and project creator: Amr Elnaggar.**
 
-VeriFlow/DCER was conceived, directed, selected, revised, and integrated by Amr
+Project Saturn/DCER was conceived, directed, selected, revised, and integrated by Amr
 Elnaggar, who declares sole authorship of the project and its project files.
 
 AI systems, including Codex, Claude, and Grok, were used only as tools under his

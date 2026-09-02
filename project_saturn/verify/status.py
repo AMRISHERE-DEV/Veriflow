@@ -1,5 +1,5 @@
 """
-VeriFlow Verify - Evidence Status Policy (day-one canonical artifact).
+Project Saturn Verify - Evidence Status Policy (day-one canonical artifact).
 
 This module is the spine of the system. It turns verifier results and admissible
 evidence into a single, defensible EVIDENCE STATUS, and keeps that status honest:

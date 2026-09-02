@@ -9,11 +9,11 @@ from __future__ import annotations
 import importlib
 import unittest
 
-from veriflow.engine import ReleaseDecision, assure_sec_claim, verify_receipt
-from veriflow.lanes.financial import issue_trusted_companyfacts
-from veriflow.lanes.financial.models import companyfacts_are_trusted, financial_binding_subject
-from veriflow.verify.status import EvidenceStatus
-from veriflow.verify.trust import issue_trusted_binding_proof
+from project_saturn.engine import ReleaseDecision, assure_sec_claim, verify_receipt
+from project_saturn.lanes.financial import issue_trusted_companyfacts
+from project_saturn.lanes.financial.models import companyfacts_are_trusted, financial_binding_subject
+from project_saturn.verify.status import EvidenceStatus
+from project_saturn.verify.trust import issue_trusted_binding_proof
 
 CONCEPT = "RevenueFromContractWithCustomerExcludingAssessedTax"
 FILED_VALUE = 383285000000.0
@@ -127,7 +127,7 @@ class SecAssuranceHelperTests(unittest.TestCase):
         self.assertEqual(r.release_decision, ReleaseDecision.REQUIRE_CLARIFICATION)
 
     def test_live_sec_fetch_is_byte_capped(self):
-        resolver = importlib.import_module("veriflow.lanes.financial.resolver")
+        resolver = importlib.import_module("project_saturn.lanes.financial.resolver")
         requested = []
 
         class Response:
@@ -145,7 +145,7 @@ class SecAssuranceHelperTests(unittest.TestCase):
         resolver.urllib.request.urlopen = lambda req, timeout=None: Response()
         try:
             result = resolver.fetch_companyfacts(
-                "320193", user_agent="VeriFlow test operator@example.test")
+                "320193", user_agent="Project Saturn test operator@example.test")
         finally:
             resolver.urllib.request.urlopen = original
         self.assertIsNone(result)
@@ -167,18 +167,18 @@ class SecAssuranceHelperTests(unittest.TestCase):
         self.assertFalse(companyfacts_are_trusted(trusted))
 
     def test_live_sec_fetch_requires_real_operator_identity(self):
-        resolver = importlib.import_module("veriflow.lanes.financial.resolver")
+        resolver = importlib.import_module("project_saturn.lanes.financial.resolver")
         self.assertIsNone(resolver.fetch_companyfacts("320193", user_agent=""))
         self.assertIsNone(resolver.fetch_companyfacts(
-            "320193", user_agent="VeriFlow set-your-email@example.com"))
+            "320193", user_agent="Project Saturn set-your-email@example.com"))
 
     def test_live_sec_fetch_rejects_invalid_cik_before_network(self):
-        resolver = importlib.import_module("veriflow.lanes.financial.resolver")
+        resolver = importlib.import_module("project_saturn.lanes.financial.resolver")
         original = resolver.urllib.request.urlopen
         resolver.urllib.request.urlopen = lambda *_args, **_kwargs: self.fail("network called")
         try:
             result = resolver.fetch_companyfacts(
-                "CIK-1", user_agent="VeriFlow test operator@example.test")
+                "CIK-1", user_agent="Project Saturn test operator@example.test")
         finally:
             resolver.urllib.request.urlopen = original
         self.assertIsNone(result)

@@ -22,7 +22,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from veriflow.verify.status import VerifiabilityClass
+from project_saturn.verify.status import VerifiabilityClass
 
 from .contracts import AdvisorySignal, ProposedClaim, Severity
 
@@ -50,8 +50,8 @@ def propose_financial(
     enforcer will not release it silently. The free-text -> us-gaap concept binding is
     likewise uncheckable in code, so without a TRUSTED binding_proof the claim caps below VERIFIED.
     """
-    from veriflow.lanes.financial.models import financial_binding_subject
-    from veriflow.verify.trust import binding_proof_is_trusted
+    from project_saturn.lanes.financial.models import financial_binding_subject
+    from project_saturn.verify.trust import binding_proof_is_trusted
     advisories = tuple(advisories)
     if fiscal_year is None:
         advisories = (*advisories,
@@ -111,8 +111,8 @@ def propose_logic(
     A logic claim is MECHANICAL. The formula<->claim binding is uncheckable in code, so ONLY a
     trusted `binding_proof` (factory-issued) unlocks VERIFIED; without it a CAUTION is attached and
     the lane stays below VERIFIED (the deterministic check is advisory only)."""
-    from veriflow.lanes.logic.verify import logic_binding_subject
-    from veriflow.verify.trust import binding_proof_is_trusted
+    from project_saturn.lanes.logic.verify import logic_binding_subject
+    from project_saturn.verify.trust import binding_proof_is_trusted
     advisories = tuple(advisories)
     subject = logic_binding_subject(
         claim_id=claim_id, text=text, mode=mode, constraints=tuple(constraints),

@@ -1,4 +1,4 @@
-"""VeriFlow Verify - evidence-constrained verification spine."""
+"""Project Saturn Verify - evidence-constrained verification spine."""
 from .admissibility import EvidenceRecord, admit, evidence_source_subject
 from .extraction import ExtractedClaim, classify, extract_claim
 from .gateway import (

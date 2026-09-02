@@ -9,7 +9,7 @@ represents the natural-language claim.
 This module ships a deterministic, offline RULE-BASED extractor (arithmetic /
 registry-lookup / heuristic classification) so the spine runs and is testable
 with zero LLM. The real LLM extractor plugs in at the marked seam and MUST route
-its model call through the gateway (veriflow.verify.gateway.guarded_model_call).
+its model call through the gateway (project_saturn.verify.gateway.guarded_model_call).
 
 The binding check here is a genuine round-trip: parse the claim into a canonical
 form, re-serialise it, and confirm it matches the normalised input. A claim whose

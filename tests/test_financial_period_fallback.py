@@ -20,12 +20,12 @@ import unittest
 from dataclasses import replace
 from datetime import datetime, timezone
 
-from veriflow.lanes.financial import (
+from project_saturn.lanes.financial import (
     FinancialClaim,
     issue_trusted_companyfacts,
     verify_financial_claim,
 )
-from veriflow.verify.trust import issue_trusted_binding_proof
+from project_saturn.verify.trust import issue_trusted_binding_proof
 
 NOW = datetime(2026, 9, 3, tzinfo=timezone.utc)
 NI = "NetIncomeLoss"

@@ -9,7 +9,7 @@ import unittest
 from dataclasses import replace
 from datetime import datetime, timezone
 
-from veriflow.lanes.financial import (
+from project_saturn.lanes.financial import (
     FinancialClaim,
     SecFact,
     issue_trusted_companyfacts,
@@ -18,7 +18,7 @@ from veriflow.lanes.financial import (
     verify_financial_claim,
     verify_prose_claim,
 )
-from veriflow.verify.trust import issue_trusted_binding_proof
+from project_saturn.verify.trust import issue_trusted_binding_proof
 
 NOW = datetime(2026, 6, 27, tzinfo=timezone.utc)
 

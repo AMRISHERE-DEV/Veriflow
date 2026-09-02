@@ -1,6 +1,6 @@
 """Financial-lane verifier.
 
-Routes a FinancialClaim through the HARDENED veriflow.verify VERIFIED gate. There
+Routes a FinancialClaim through the HARDENED project_saturn.verify VERIFIED gate. There
 is NO new status logic here: the kernel (decide_status) decides. The lane's job is
 to (a) deterministically locate THE authoritative filed figure for the EXACT
 concept + period and (b) present an exact-match as a non-LLM definitive verifier
@@ -28,7 +28,7 @@ from __future__ import annotations
 import math
 from datetime import date, datetime, timezone
 
-from veriflow.verify.status import (
+from project_saturn.verify.status import (
     AuthorityTier,
     Claim,
     EvidenceStatus,
@@ -39,7 +39,7 @@ from veriflow.verify.status import (
     VerifierResult,
     decide_status,
 )
-from veriflow.verify.trust import binding_proof_is_trusted
+from project_saturn.verify.trust import binding_proof_is_trusted
 
 from .extractor import extract_facts
 from .models import (

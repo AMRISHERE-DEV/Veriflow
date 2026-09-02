@@ -3,7 +3,7 @@
 This is the only place a status can be MINTED, and it does so by delegating to the
 existing, hardened, stdlib kernel - it does not reinvent a verifier:
 
-  * "financial.sec_xbrl" -> veriflow.lanes.financial.verify.verify_financial_claim,
+  * "financial.sec_xbrl" -> project_saturn.lanes.financial.verify.verify_financial_claim,
     which routes a deterministic AUTHORITATIVE_LOOKUP through decide_status. VERIFIED
     there means only "the claimed value equals the figure the cited SEC filing reports."
 
@@ -16,9 +16,9 @@ an exception out of the engine, never an unjustified positive.
 """
 from __future__ import annotations
 
-from veriflow.lanes.financial.models import FinancialClaim
-from veriflow.lanes.financial.verify import verify_financial_claim
-from veriflow.verify.status import EvidenceStatus
+from project_saturn.lanes.financial.models import FinancialClaim
+from project_saturn.lanes.financial.verify import verify_financial_claim
+from project_saturn.verify.status import EvidenceStatus
 
 from .contracts import Certification, ProposedClaim
 
@@ -78,7 +78,7 @@ def certify(proposed: ProposedClaim, *, sources: dict) -> Certification:
         )
 
     if plan == "logic.propositional":
-        from veriflow.lanes.logic.verify import LogicClaim, verify_logic_claim
+        from project_saturn.lanes.logic.verify import LogicClaim, verify_logic_claim
         p = proposed.payload
         try:
             lc = LogicClaim(

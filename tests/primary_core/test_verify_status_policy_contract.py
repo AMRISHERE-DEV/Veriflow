@@ -1,5 +1,5 @@
 """
-Tests for the VeriFlow Verify status policy and gateway contract.
+Tests for the Project Saturn Verify status policy and gateway contract.
 
 Runs standalone (`python tests/test_status_policy.py`) or under pytest.
 Each status is proven reachable ONLY via its own predicate, plus the headline
@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 import contextlib
 
-from veriflow.verify.gateway import (
+from project_saturn.verify.gateway import (
     MissingGatewayToken,
     ResidencyClass,
     ResidencyViolation,
@@ -26,7 +26,7 @@ from veriflow.verify.gateway import (
     harden_untrusted_evidence,
     minimise,
 )
-from veriflow.verify.status import (
+from project_saturn.verify.status import (
     AuthorityTier,
     Claim,
     Direction,

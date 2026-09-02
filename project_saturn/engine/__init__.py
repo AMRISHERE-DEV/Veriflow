@@ -1,11 +1,11 @@
-"""VeriFlow unified engine: Reasoner (fail-open) -> Verifier (non-LLM core) -> Enforcer.
+"""Project Saturn unified engine: Reasoner (fail-open) -> Verifier (non-LLM core) -> Enforcer.
 
-The best-of-all-worlds synthesis of DCER+PXB, AmrThink, and the VeriFlow Lane-A core,
+The best-of-all-worlds synthesis of DCER+PXB, AmrThink, and the Project Saturn Lane-A core,
 behind one honest pipeline. See contracts.py for the load-bearing invariants.
 """
 from __future__ import annotations
 
-from veriflow.verify.trust import DerivationProof, issue_trusted_derivation_proof
+from project_saturn.verify.trust import DerivationProof, issue_trusted_derivation_proof
 
 from .contracts import (
     DISCLAIMER,

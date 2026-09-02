@@ -1,30 +1,20 @@
-"""VeriFlow: claim-level evidence assurance and release gating for AI outputs.
+"""Deprecated alias: the ``veriflow`` package was renamed to ``project_saturn`` in v1.1.0.
 
-Core invariant: model agreement is never evidence. VERIFIED requires a non-LLM
-definitive verifier plus a trusted, content-bound claim binding; everything else
-is graded under hard status ceilings, with abstention as the default.
+Every ``veriflow.*`` name resolves to the SAME module object as ``project_saturn.*``
+(aliased in ``sys.modules`` before any submodule import), so module-private trust
+sentinels keep a single identity and nothing is imported twice. Remove in a
+future major release.
 """
+import importlib
+import pkgutil
+import sys
+import warnings
 
-from .verify import (
-    Claim,
-    EvidenceItem,
-    EvidenceStatus,
-    ExecutionState,
-    VerifiabilityClass,
-    VerificationOutcome,
-    verify_extracted,
-    verify_text,
-)
+import project_saturn as _root
 
-__version__ = "1.0.2"
+warnings.warn("'veriflow' is deprecated; import 'project_saturn' instead", DeprecationWarning, stacklevel=2)
 
-__all__ = [
-    "Claim",
-    "EvidenceItem",
-    "EvidenceStatus",
-    "ExecutionState",
-    "VerifiabilityClass",
-    "VerificationOutcome",
-    "verify_extracted",
-    "verify_text",
-]
+for _info in pkgutil.walk_packages(_root.__path__, prefix="project_saturn."):
+    _mod = importlib.import_module(_info.name)
+    sys.modules["veriflow" + _info.name[len("project_saturn"):]] = _mod
+sys.modules[__name__] = _root

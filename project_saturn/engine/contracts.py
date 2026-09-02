@@ -1,11 +1,11 @@
-"""Typed contracts for the unified VeriFlow engine (the best-of-all-worlds synthesis).
+"""Typed contracts for the unified Project Saturn engine (the best-of-all-worlds synthesis).
 
 The engine fuses three bodies of prior work behind ONE honest pipeline:
 
   Reasoner  (DCER-derived, LLM/advisory, FAIL-OPEN)
       -> structures a raw output into a typed claim + a verification plan,
          and may attach advisory signals. It NEVER produces evidence/status.
-  Verifier  (VeriFlow Lane A, NON-LLM, the certifying core)
+  Verifier  (Project Saturn Lane A, NON-LLM, the certifying core)
       -> runs the existing decide_status kernel through a lane adapter; VERIFIED
          only on a non-LLM definitive verifier + checked claim-binding.
   Enforcer  (PXB-derived, DETERMINISTIC)
@@ -32,10 +32,10 @@ import json
 from dataclasses import dataclass, field
 from enum import Enum
 
-from veriflow._canonical import canonical_sha256
-from veriflow.verify.status import EvidenceStatus, VerifiabilityClass
+from project_saturn._canonical import canonical_sha256
+from project_saturn.verify.status import EvidenceStatus, VerifiabilityClass
 
-ENGINE_VERSION = "veriflow.engine.v2"
+ENGINE_VERSION = "project_saturn.engine.v2"
 
 # The single sentence consumers are allowed to attach to any release. It draws the
 # integrity-of-record vs integrity-of-judgment line explicitly so the engine cannot
@@ -168,6 +168,6 @@ def canonical_hash(content: dict) -> str:
 
 
 def legacy_canonical_hash(content: dict) -> str:
-    """Receipt-hash algorithm used by ``veriflow.engine.v1``."""
+    """Receipt-hash algorithm used by ``project_saturn.engine.v1``."""
     payload = json.dumps(content, sort_keys=True, separators=(",", ":"), default=str)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()

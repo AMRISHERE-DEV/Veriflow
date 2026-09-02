@@ -24,15 +24,15 @@ from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from veriflow.verify import resolver as resolver_mod
-from veriflow.verify.admissibility import EvidenceRecord, admit
-from veriflow.verify.status import (
+from project_saturn.verify import resolver as resolver_mod
+from project_saturn.verify.admissibility import EvidenceRecord, admit
+from project_saturn.verify.status import (
     AuthorityTier,
     Entailment,
     EvidenceItem,
     StatusPolicy,
 )
-from veriflow.verify.verifiers import (
+from project_saturn.verify.verifiers import (
     ArithmeticBoundError,
     evaluate_relation,
 )
@@ -96,9 +96,9 @@ def test_node_count_cap_blocks_large_expression():
 
 def test_arithmetic_verifier_reports_error_not_pass_on_dos():
     # The DoS input must surface as ERROR through the verifier, NEVER a PASS.
-    from veriflow.verify.extraction import ExtractedClaim
-    from veriflow.verify.status import Claim, VerifiabilityClass, VerifierOutcome
-    from veriflow.verify.verifiers import ArithmeticVerifier
+    from project_saturn.verify.extraction import ExtractedClaim
+    from project_saturn.verify.status import Claim, VerifiabilityClass, VerifierOutcome
+    from project_saturn.verify.verifiers import ArithmeticVerifier
 
     claim = Claim(id="C1", text="9**9**9 == 1",
                   verifiability_class=VerifiabilityClass.MECHANICAL)
@@ -322,7 +322,7 @@ def test_oversized_body_is_bounded_and_fails_open(monkeypatch=None):
 
 
 def test_small_body_still_fetches():
-    body = b"<p>" + (b"VeriFlow real content here. " * 20).strip() + b"</p>"
+    body = b"<p>" + (b"Project Saturn real content here. " * 20).strip() + b"</p>"
 
     def fake_urlopen(req, *, timeout=None, host_resolver=None):
         return _FakeResponse(body)
@@ -331,7 +331,7 @@ def test_small_body_still_fetches():
         "https://example.test/page",
         host_resolver=lambda _host: ("93.184.216.34",), opener=fake_urlopen)
     assert result is not None
-    assert "VeriFlow real content" in result.content
+    assert "Project Saturn real content" in result.content
 
 
 def test_private_and_loopback_fetch_targets_are_rejected_before_open():

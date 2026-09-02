@@ -7,10 +7,10 @@ import json
 import pickle
 import unittest
 
-from veriflow.engine.contracts import Certification, ProposedClaim, ReleaseDecision
-from veriflow.engine.enforcer import enforce
-from veriflow.verify.status import EvidenceStatus, VerifiabilityClass
-from veriflow.verify.trust import (
+from project_saturn.engine.contracts import Certification, ProposedClaim, ReleaseDecision
+from project_saturn.engine.enforcer import enforce
+from project_saturn.verify.status import EvidenceStatus, VerifiabilityClass
+from project_saturn.verify.trust import (
     BindingProof,
     binding_proof_is_trusted,
     issue_trusted_binding_proof,
