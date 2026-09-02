@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Project Saturn flagship demo: SEC/XBRL financial claim assurance.
+"""Glass Ionomer flagship demo: SEC/XBRL financial claim assurance.
 
 Verifies three claims about Apple's FY2023 revenue against the authoritative
 SEC EDGAR companyfacts record (live when SEC_USER_AGENT is set, otherwise a
@@ -24,12 +24,12 @@ import json
 import os
 import urllib.request
 
-from project_saturn.lanes.financial import (
+from glass_ionomer.lanes.financial import (
     FinancialClaim,
     issue_trusted_companyfacts,
     verify_financial_claim,
 )
-from project_saturn.verify.trust import issue_trusted_binding_proof
+from glass_ionomer.verify.trust import issue_trusted_binding_proof
 
 CIK = 320193                                  # Apple Inc.
 CONCEPT = "RevenueFromContractWithCustomerExcludingAssessedTax"

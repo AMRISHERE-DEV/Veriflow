@@ -100,8 +100,8 @@ ResolverFn = Callable[[Lead], ResolvedSource | None]
 
 
 class _StampableResolver(Protocol):
-    _project_saturn_resolver_trust_token: object
-    _project_saturn_resolver_id: str
+    _glass_ionomer_resolver_trust_token: object
+    _glass_ionomer_resolver_id: str
 
     def __call__(self, lead: Lead) -> ResolvedSource | None: ...
 
@@ -111,19 +111,19 @@ def issue_trusted_resolver(resolver_fn: ResolverFn, *, resolver_id: str) -> Reso
 
     The private identity cannot be supplied through JSON or ordinary evidence
     fields. Deployments must keep this issuance point away from tenant code, just
-    like the other trust factories in :mod:`project_saturn.verify.trust`.
+    like the other trust factories in :mod:`glass_ionomer.verify.trust`.
     """
     stampable = cast(_StampableResolver, resolver_fn)
-    stampable._project_saturn_resolver_trust_token = _RESOLVER_TRUST_TOKEN
-    stampable._project_saturn_resolver_id = resolver_id
+    stampable._glass_ionomer_resolver_trust_token = _RESOLVER_TRUST_TOKEN
+    stampable._glass_ionomer_resolver_id = resolver_id
     return resolver_fn
 
 
 def resolver_is_trusted(resolver_fn: ResolverFn | None, *, resolver_id: str = "") -> bool:
     return bool(
         resolver_fn is not None
-        and getattr(resolver_fn, "_project_saturn_resolver_trust_token", None) is _RESOLVER_TRUST_TOKEN
-        and (not resolver_id or getattr(resolver_fn, "_project_saturn_resolver_id", None) == resolver_id)
+        and getattr(resolver_fn, "_glass_ionomer_resolver_trust_token", None) is _RESOLVER_TRUST_TOKEN
+        and (not resolver_id or getattr(resolver_fn, "_glass_ionomer_resolver_id", None) == resolver_id)
     )
 
 
@@ -457,7 +457,7 @@ def urllib_fetch(url: str, *, timeout: float = 10.0, host_resolver=None,
         return None
     try:
         req = urllib.request.Request(  # noqa: S310 - target is public HTTP(S), checked above.
-            target, headers={"User-Agent": "Project Saturn/0.3 (+research)"})
+            target, headers={"User-Agent": "Glass Ionomer/0.3 (+research)"})
         open_url = opener or _open_public_url
         with open_url(req, timeout=timeout, host_resolver=host_resolver) as resp:
             # Accept ANY 2xx success, not just 200: PubMed answers 203 (Non-Authoritative

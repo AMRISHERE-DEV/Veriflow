@@ -7,10 +7,10 @@ import json
 import pickle
 import unittest
 
-from project_saturn.engine.contracts import Certification, ProposedClaim, ReleaseDecision
-from project_saturn.engine.enforcer import enforce
-from project_saturn.verify.status import EvidenceStatus, VerifiabilityClass
-from project_saturn.verify.trust import (
+from glass_ionomer.engine.contracts import Certification, ProposedClaim, ReleaseDecision
+from glass_ionomer.engine.enforcer import enforce
+from glass_ionomer.verify.status import EvidenceStatus, VerifiabilityClass
+from glass_ionomer.verify.trust import (
     BindingProof,
     binding_proof_is_trusted,
     issue_trusted_binding_proof,

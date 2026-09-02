@@ -28,9 +28,9 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-from project_saturn._canonical import CanonicalizationError
-from project_saturn.engine.contracts import canonical_hash
-from project_saturn.verify.status import (
+from glass_ionomer._canonical import CanonicalizationError
+from glass_ionomer.engine.contracts import canonical_hash
+from glass_ionomer.verify.status import (
     Claim,
     EvidenceStatus,
     StatusPolicy,
@@ -40,7 +40,7 @@ from project_saturn.verify.status import (
     VerifierResult,
     decide_status,
 )
-from project_saturn.verify.trust import BindingProof, binding_proof_is_trusted
+from glass_ionomer.verify.trust import BindingProof, binding_proof_is_trusted
 
 MAX_VARS = 18  # 2**18 = 262144 assignments; above this we abstain (fail-open) rather than churn
 MAX_DEPTH = 512

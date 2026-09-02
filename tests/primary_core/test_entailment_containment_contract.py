@@ -22,7 +22,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from project_saturn.verify import (
+from glass_ionomer.verify import (
     AuthorityTier,
     Entailment,
     EvidenceRecord,

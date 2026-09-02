@@ -1,6 +1,6 @@
 """The Synthesizer - compose certified claims into a defensible CONCLUSION.
 
-This is the first organ that makes Project Saturn more than a per-claim gate: it takes several
+This is the first organ that makes Glass Ionomer more than a per-claim gate: it takes several
 already-certified claims (EngineResults) and composes them into ONE conclusion whose
 assurance can never exceed its weakest admissible premise, carrying a replayable support
 graph + a signed receipt. It mints no belief of its own - synthesis is bookkeeping over
@@ -32,7 +32,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 
-from project_saturn.verify.status import (
+from glass_ionomer.verify.status import (
     CEILING,
     POSITIVE,
     Direction,
@@ -41,7 +41,7 @@ from project_saturn.verify.status import (
     StatusDecision,
     compose,
 )
-from project_saturn.verify.trust import DerivationProof, derivation_proof_is_trusted
+from glass_ionomer.verify.trust import DerivationProof, derivation_proof_is_trusted
 
 from .contracts import (
     AdvisorySignal,

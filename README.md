@@ -1,12 +1,12 @@
-# Project Saturn — claim assurance and release gating for AI outputs
+# Glass Ionomer — claim assurance and release gating for AI outputs
 
-> **Formerly VeriFlow.** Renamed in v1.1.0. The Python package is `project_saturn`; `import veriflow` still works as a deprecated alias for one release. Published artifacts and the whitepaper keep their original VeriFlow title.
+> **Formerly VeriFlow.** Renamed in v1.1.x (briefly 'Project Saturn' in v1.1.0; settled as Glass Ionomer in v1.1.1). The Python package is `glass_ionomer`; `import veriflow` still works as a deprecated alias for one release. Published artifacts and the whitepaper keep their original VeriFlow title.
 
 > **Core invariant: model agreement is never evidence.** `VERIFIED` requires a non-LLM definitive
 > verifier plus a trusted, content-bound claim binding — and when a claim cannot be checked, the
 > engine abstains.
 
-Project Saturn is a claim-level evidence-assurance and release-gating engine. Given a claim (and optional
+Glass Ionomer is a claim-level evidence-assurance and release-gating engine. Given a claim (and optional
 evidence), it decides what evidence status the claim can honestly carry and whether it may be
 released, cited, acted on, escalated, or blocked. Language models may reason, propose, and
 interpret; only code-owned deterministic gates decide what can be called settled. It is not a truth
@@ -43,7 +43,7 @@ A definitive pass that coexists with a credible contradiction is released as `CO
 
 ## Status ladder and ceilings
 
-Seven evidence statuses, minted only by the kernel (`project_saturn.verify.decide_status`):
+Seven evidence statuses, minted only by the kernel (`glass_ionomer.verify.decide_status`):
 
 | Status | Predicate (summary) | Release decision |
 | --- | --- | --- |
@@ -76,10 +76,10 @@ else caps below `VERIFIED` and travels the evidence ladder instead.
 
 | # | Claim type | Example | Definitive mechanism | Module |
 | --- | --- | --- | --- | --- |
-| 1 | Arithmetic relation | `12 / 4 = 3` | Exact rational evaluation (no float tolerance), bounded AST | `project_saturn.verify.safe_arith` |
-| 2 | Registry lookup | `lookup:key=expected` | Exact match against a system-trusted registry record | `project_saturn.verify.verifiers` |
-| 3 | Propositional logic | Model-check / entailment / SAT / UNSAT in a tuple DSL | Bounded exhaustive model enumeration | `project_saturn.lanes.logic` |
-| 4 | SEC/XBRL as-filed figure | "Entity X reported concept C = V for FY2023" | Exact match against trusted EDGAR companyfacts, restatement-aware, fail-closed | `project_saturn.lanes.financial` |
+| 1 | Arithmetic relation | `12 / 4 = 3` | Exact rational evaluation (no float tolerance), bounded AST | `glass_ionomer.verify.safe_arith` |
+| 2 | Registry lookup | `lookup:key=expected` | Exact match against a system-trusted registry record | `glass_ionomer.verify.verifiers` |
+| 3 | Propositional logic | Model-check / entailment / SAT / UNSAT in a tuple DSL | Bounded exhaustive model enumeration | `glass_ionomer.lanes.logic` |
+| 4 | SEC/XBRL as-filed figure | "Entity X reported concept C = V for FY2023" | Exact match against trusted EDGAR companyfacts, restatement-aware, fail-closed | `glass_ionomer.lanes.financial` |
 
 In every case, `VERIFIED` additionally requires the trusted claim-binding proof described below —
 a correct check of the wrong formalization is not a verified claim. Further lanes (grounded
@@ -105,8 +105,8 @@ Python API:
 ```python
 from datetime import datetime, timezone
 
-from project_saturn.verify.pipeline import verify_text
-from project_saturn.verify.verifiers import ArithmeticVerifier
+from glass_ionomer.verify.pipeline import verify_text
+from glass_ionomer.verify.verifiers import ArithmeticVerifier
 
 outcome = verify_text("2 + 2 = 4", [], [ArithmeticVerifier()],
                       now=datetime.now(timezone.utc))
@@ -119,7 +119,7 @@ below `VERIFIED` — a value match alone is never enough.
 
 ## Model output is advisory, structurally
 
-`project_saturn.engine` accepts an optional LLM callable for structuring free text into typed claims
+`glass_ionomer.engine` accepts an optional LLM callable for structuring free text into typed claims
 (`engine.llm_reasoner`). It is bring-your-own and fail-open: no provider is bundled, a structuring
 failure degrades to the deterministic path, and nothing a model emits can reach `VERIFIED`,
 `REFUTED`, or an allow-release decision on its own. The unit-test suite runs fully offline and
@@ -129,10 +129,10 @@ proves this boundary (`tests/test_engine_llm.py`).
 
 | Package | Responsibility |
 | --- | --- |
-| `project_saturn.verify` | The certifying kernel: extraction, admissibility, provenance boundary, trust proofs, status decision. Stdlib-only. |
-| `project_saturn.engine` | Propose → certify → enforce: the sole mapping from evidence status to release decision and signed receipt. |
-| `project_saturn.lanes.financial` | SEC/XBRL lane: EDGAR companyfacts resolution, deterministic fact extraction, fail-closed verification. |
-| `project_saturn.lanes.logic` | Propositional-logic lane: bounded exhaustive model enumeration. |
+| `glass_ionomer.verify` | The certifying kernel: extraction, admissibility, provenance boundary, trust proofs, status decision. Stdlib-only. |
+| `glass_ionomer.engine` | Propose → certify → enforce: the sole mapping from evidence status to release decision and signed receipt. |
+| `glass_ionomer.lanes.financial` | SEC/XBRL lane: EDGAR companyfacts resolution, deterministic fact extraction, fail-closed verification. |
+| `glass_ionomer.lanes.logic` | Propositional-logic lane: bounded exhaustive model enumeration. |
 
 Trust is object identity, not a boolean field: trusted proofs are stamped by private factories, do
 not survive serialization, and cannot be reconstructed from attacker-supplied data. Binding proofs
@@ -160,9 +160,9 @@ clarification.
 
 ## Author and prior work
 
-Project Saturn is authored by **Dr. Amr Elnaggar** (sole author; see `AUTHORS.md`). It descends from his
+Glass Ionomer is authored by **Dr. Amr Elnaggar** (sole author; see `AUTHORS.md`). It descends from his
 earlier published work on DCER+PXB, published on Zenodo (DOI: `10.5281/zenodo.18047498`) and the
-subject of USPTO provisional patent application **63/940,036**. Project Saturn carries that lineage
+subject of USPTO provisional patent application **63/940,036**. Glass Ionomer carries that lineage
 forward as a standalone engine: the same separation of model reasoning from evidence authority,
 hardened into the non-LLM `VERIFIED` gate, trusted content-bound binding proofs, and the
 abstention-first release policy documented here.

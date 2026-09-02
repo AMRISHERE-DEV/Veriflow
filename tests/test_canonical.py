@@ -5,11 +5,11 @@ from __future__ import annotations
 import dataclasses
 import unittest
 
-from project_saturn._canonical import CanonicalizationError
-from project_saturn.engine import ProposedClaim, assure, verify_receipt
-from project_saturn.engine.contracts import canonical_hash, legacy_canonical_hash
-from project_saturn.lanes.financial.models import stable_hash as financial_hash
-from project_saturn.verify.status import VerifiabilityClass
+from glass_ionomer._canonical import CanonicalizationError
+from glass_ionomer.engine import ProposedClaim, assure, verify_receipt
+from glass_ionomer.engine.contracts import canonical_hash, legacy_canonical_hash
+from glass_ionomer.lanes.financial.models import stable_hash as financial_hash
+from glass_ionomer.verify.status import VerifiabilityClass
 
 
 class CanonicalHashTests(unittest.TestCase):
@@ -31,7 +31,7 @@ class CanonicalHashTests(unittest.TestCase):
             "legacy", "unverified legacy claim", VerifiabilityClass.EMPIRICAL, "none")
         result = assure(proposed, sources={})
         content = {
-            "engine_version": "project_saturn.engine.v1",
+            "engine_version": "glass_ionomer.engine.v1",
             "claim_id": result.receipt.claim_id,
             "raw_claim_sha256": result.receipt.raw_claim_sha256,
             "verification_plan": result.receipt.verification_plan,
@@ -46,7 +46,7 @@ class CanonicalHashTests(unittest.TestCase):
         }
         legacy = dataclasses.replace(
             result.receipt,
-            engine_version="project_saturn.engine.v1",
+            engine_version="glass_ionomer.engine.v1",
             receipt_hash=legacy_canonical_hash(content),
             signature=None,
         )

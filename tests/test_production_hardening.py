@@ -4,7 +4,7 @@ import unittest
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 
-from project_saturn.verify import (
+from glass_ionomer.verify import (
     AuthorityTier,
     Entailment,
     EvidenceRecord,
@@ -16,7 +16,7 @@ from project_saturn.verify import (
     resolve,
     verify_text,
 )
-from project_saturn.verify.resolver import _crude_text
+from glass_ionomer.verify.resolver import _crude_text
 
 NOW = datetime(2026, 8, 18, tzinfo=timezone.utc)
 
@@ -144,7 +144,7 @@ class ProductionEvidenceBoundaryTests(unittest.TestCase):
                 "published": published,
             },
         })
-        from project_saturn.verify import resolve
+        from glass_ionomer.verify import resolve
         records, _ = resolve(
             [Lead.suggest("a", "fixture:a", claimed_published=NOW)],
             resolver_fn=resolver,

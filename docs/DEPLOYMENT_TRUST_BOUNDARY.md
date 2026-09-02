@@ -1,15 +1,15 @@
-# Project Saturn Deployment Trust Boundary
+# Glass Ionomer Deployment Trust Boundary
 
 ## What the kernel protects
 
-Project Saturn rejects trust claims reconstructed from ordinary objects, JSON, copied dataclasses,
+Glass Ionomer rejects trust claims reconstructed from ordinary objects, JSON, copied dataclasses,
 caller-controlled metadata, or model output. Trusted proofs are content-bound to the exact claim or
 evidence subject, and definitive status still requires the corresponding provenance and capability
 checks.
 
 ## What it does not protect
 
-Python module privacy is not process isolation. Code already executing in the Project Saturn interpreter
+Python module privacy is not process isolation. Code already executing in the Glass Ionomer interpreter
 can call operator APIs such as:
 
 - `issue_trusted_binding_proof` and the other `issue_trusted_*` factories;

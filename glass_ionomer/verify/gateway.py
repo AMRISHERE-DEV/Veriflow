@@ -1,5 +1,5 @@
 """
-Project Saturn Verify - Data Policy Gateway: a typed, enforced egress contract.
+Glass Ionomer Verify - Data Policy Gateway: a typed, enforced egress contract.
 
 The invariant: external model calls are STRUCTURALLY impossible without a
 GatewayDecision token. The adapter functions require it in their signature; the

@@ -12,14 +12,14 @@ call the issuance functions and is therefore part of the trusted operator plane.
 run untrusted plugins, model-generated code, and tenant code out of process; see
 `docs/DEPLOYMENT_TRUST_BOUNDARY.md`.
 
-Pure stdlib; imports nothing from project_saturn (a true leaf - safe to import from any layer).
+Pure stdlib; imports nothing from glass_ionomer (a true leaf - safe to import from any layer).
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
 
-from project_saturn._canonical import CanonicalizationError, canonical_sha256
+from glass_ionomer._canonical import CanonicalizationError, canonical_sha256
 
 # Module-private identities. "Trusted" == carrying THIS exact object; unforgeable from data.
 _BINDING_TRUST_TOKEN = object()

@@ -1,5 +1,5 @@
 """
-Frozen acceptance tests for Project Saturn Verify build #2 — the resolver
+Frozen acceptance tests for Glass Ionomer Verify build #2 — the resolver
 (lead -> resolved -> admitted). Prepared with Claude assistance under Amr
 Elnaggar's sole authorship and direction.
 
@@ -25,7 +25,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from project_saturn.verify import (
+from glass_ionomer.verify import (
     AuthorityTier,
     Entailment,
     EvidenceRecord,
@@ -174,7 +174,7 @@ def test_resolver_fail_open_and_backcompat():
     # Reality Contact v0: networking remains explicit through urllib_fetch. Host resolution
     # exists solely to enforce its public-address SSRF policy; importing or using the offline
     # resolver paths performs no network operation.
-    import project_saturn.verify.resolver as _res
+    import glass_ionomer.verify.resolver as _res
     src = inspect.getsource(_res)
     assert "socket.getaddrinfo" in src
     assert src.index("socket.getaddrinfo") > src.index("def _resolve_host")

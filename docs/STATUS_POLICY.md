@@ -1,10 +1,10 @@
 # Evidence Status Policy
 
-This is the canonical specification of evidence status in Project Saturn Verify. It is the
+This is the canonical specification of evidence status in Glass Ionomer Verify. It is the
 spine of the system: the UI, the API, the workflow, and the human-review rules
 all read from it. It is intentionally written as **predicates**, not prose, so it
 is testable. The reference implementation lives in
-[`project_saturn/verify/status.py`](../project_saturn/verify/status.py); the tests in
+[`glass_ionomer/verify/status.py`](../glass_ionomer/verify/status.py); the tests in
 [`tests/primary_core/test_verify_status_policy_contract.py`](../tests/primary_core/test_verify_status_policy_contract.py)
 prove that each
 status is reachable only via its own predicate.

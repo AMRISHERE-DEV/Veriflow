@@ -1,5 +1,5 @@
 """
-Frozen acceptance tests for Project Saturn build #4 - quote/span-bound entailment.
+Frozen acceptance tests for Glass Ionomer build #4 - quote/span-bound entailment.
 Prepared with Claude assistance under Amr Elnaggar's sole authorship and direction.
 
 A support/contradiction only counts if the cited passage actually appears in the
@@ -20,7 +20,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from project_saturn.verify import (
+from glass_ionomer.verify import (
     AuthorityTier,
     Claim,
     Direction,

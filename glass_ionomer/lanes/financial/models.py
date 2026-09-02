@@ -17,8 +17,8 @@ import re
 from dataclasses import dataclass
 from enum import Enum
 
-from project_saturn._canonical import CanonicalizationError, canonical_sha256
-from project_saturn.verify.trust import _STAMP, BindingProof
+from glass_ionomer._canonical import CanonicalizationError, canonical_sha256
+from glass_ionomer.verify.trust import _STAMP, BindingProof
 
 _COMPANYFACTS_TRUST_TOKEN = object()
 _COMPANYFACTS_CANONICAL_NODE_LIMIT = 500_000

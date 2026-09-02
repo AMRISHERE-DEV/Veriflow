@@ -1,4 +1,4 @@
-"""Project Saturn: claim-level evidence assurance and release gating for AI outputs.
+"""Glass Ionomer: claim-level evidence assurance and release gating for AI outputs.
 
 Core invariant: model agreement is never evidence. VERIFIED requires a non-LLM
 definitive verifier plus a trusted, content-bound claim binding; everything else
@@ -16,7 +16,7 @@ from .verify import (
     verify_text,
 )
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 __all__ = [
     "Claim",

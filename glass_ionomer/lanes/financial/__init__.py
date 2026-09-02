@@ -1,7 +1,7 @@
 """Financial (SEC/XBRL) verification lane.
 
 Verify a structured financial claim against an authoritative EDGAR companyfacts
-record, routed through the hardened project_saturn.verify VERIFIED gate. VERIFIED means
+record, routed through the hardened glass_ionomer.verify VERIFIED gate. VERIFIED means
 "matches the figure as reported in the cited filing (accession)", never economic truth.
 """
 from .extractor import extract_facts, select_period

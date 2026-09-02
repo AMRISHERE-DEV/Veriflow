@@ -1,5 +1,5 @@
 """
-Frozen acceptance tests for Project Saturn Verify build #3 — provenance independence in
+Frozen acceptance tests for Glass Ionomer Verify build #3 — provenance independence in
 corroboration counting. Prepared with Claude assistance under Amr Elnaggar's
 sole authorship and direction.
 
@@ -20,7 +20,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from project_saturn.verify import (
+from glass_ionomer.verify import (
     AuthorityTier,
     Claim,
     Entailment,

@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "project-saturn"
-version = "1.1.0"
-description = "Project Saturn: claim-level evidence assurance and release gating for AI outputs."
+name = "glass-ionomer"
+version = "1.1.1"
+description = "Glass Ionomer: claim-level evidence assurance and release gating for AI outputs."
 readme = "README.md"
 authors = [{name = "Amr Elnaggar"}]
 license = {file = "LICENSE"}
@@ -19,7 +19,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["project_saturn*", "veriflow"]
+include = ["glass_ionomer*", "veriflow"]
 
 [tool.ruff]
 target-version = "py310"
@@ -32,7 +32,7 @@ ignore = ["UP038"]
 
 [tool.ruff.lint.per-file-ignores]
 # This enum deliberately uses PASS as a wire-level status string.
-"project_saturn/verify/status.py" = ["S105"]
+"glass_ionomer/verify/status.py" = ["S105"]
 # Security rules that are unsafe in production are intentional test mechanisms here
 # (S301: a test deliberately pickle-round-trips a trust proof to prove trust is stripped).
 "tests/**/*.py" = ["S101", "S104", "S105", "S106", "S301", "S310", "S603"]
@@ -40,4 +40,4 @@ ignore = ["UP038"]
 
 [tool.mypy]
 python_version = "3.10"
-files = ["project_saturn"]
+files = ["glass_ionomer"]

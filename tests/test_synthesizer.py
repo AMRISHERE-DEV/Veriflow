@@ -10,7 +10,7 @@ from __future__ import annotations
 import dataclasses
 import unittest
 
-from project_saturn.engine import (
+from glass_ionomer.engine import (
     ProposedClaim,
     ReleaseDecision,
     assure,
@@ -20,10 +20,10 @@ from project_saturn.engine import (
     synthesize,
     verify_conclusion,
 )
-from project_saturn.lanes.financial import issue_trusted_companyfacts
-from project_saturn.lanes.financial.models import financial_binding_subject
-from project_saturn.verify.status import VerifiabilityClass
-from project_saturn.verify.trust import issue_trusted_binding_proof
+from glass_ionomer.lanes.financial import issue_trusted_companyfacts
+from glass_ionomer.lanes.financial.models import financial_binding_subject
+from glass_ionomer.verify.status import VerifiabilityClass
+from glass_ionomer.verify.trust import issue_trusted_binding_proof
 
 REV = "RevenueFromContractWithCustomerExcludingAssessedTax"
 NI = "NetIncomeLoss"

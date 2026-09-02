@@ -9,7 +9,7 @@ from __future__ import annotations
 import dataclasses
 import unittest
 
-from project_saturn.engine import (
+from glass_ionomer.engine import (
     DISCLAIMER,
     AdvisorySignal,
     ReleaseDecision,
@@ -20,12 +20,12 @@ from project_saturn.engine import (
     propose_unstructured,
     verify_receipt,
 )
-from project_saturn.engine.contracts import Certification, ProposedClaim
-from project_saturn.engine.enforcer import enforce
-from project_saturn.lanes.financial import issue_trusted_companyfacts
-from project_saturn.lanes.financial.models import financial_binding_subject
-from project_saturn.verify.status import EvidenceStatus
-from project_saturn.verify.trust import issue_trusted_binding_proof
+from glass_ionomer.engine.contracts import Certification, ProposedClaim
+from glass_ionomer.engine.enforcer import enforce
+from glass_ionomer.lanes.financial import issue_trusted_companyfacts
+from glass_ionomer.lanes.financial.models import financial_binding_subject
+from glass_ionomer.verify.status import EvidenceStatus
+from glass_ionomer.verify.trust import issue_trusted_binding_proof
 
 CONCEPT = "RevenueFromContractWithCustomerExcludingAssessedTax"
 FILED_VALUE = 383285000000.0

@@ -8,13 +8,13 @@ from __future__ import annotations
 import unittest
 from dataclasses import replace
 
-from project_saturn.lanes.financial import (
+from glass_ionomer.lanes.financial import (
     FinancialClaim,
     issue_trusted_companyfacts,
     verify_financial_claim,
 )
-from project_saturn.verify.safe_arith import evaluate_relation
-from project_saturn.verify.trust import issue_trusted_binding_proof
+from glass_ionomer.verify.safe_arith import evaluate_relation
+from glass_ionomer.verify.trust import issue_trusted_binding_proof
 
 
 class FinancialAuditPins(unittest.TestCase):

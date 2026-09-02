@@ -8,8 +8,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from project_saturn.lanes.financial.models import stable_hash
-from project_saturn.lanes.financial.resolver import fetch_companyfacts, ticker_to_cik
+from glass_ionomer.lanes.financial.models import stable_hash
+from glass_ionomer.lanes.financial.resolver import fetch_companyfacts, ticker_to_cik
 
 from .contracts import EngineResult
 from .pipeline import assure

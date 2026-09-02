@@ -1,8 +1,8 @@
 """Shared bounded arithmetic evaluation utilities.
 
 This module is stdlib-only and intentionally small. It supports two callers:
-mechanical relation verification in ``project_saturn.verify`` and variable-bound
-expression evaluation in ``project_saturn.spine``.
+mechanical relation verification in ``glass_ionomer.verify`` and variable-bound
+expression evaluation in ``glass_ionomer.spine``.
 """
 from __future__ import annotations
 

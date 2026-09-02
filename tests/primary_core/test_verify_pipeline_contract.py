@@ -10,17 +10,17 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-from project_saturn.verify.admissibility import EvidenceRecord
-from project_saturn.verify.extraction import extract_claim
-from project_saturn.verify.pipeline import verify_extracted, verify_text
-from project_saturn.verify.status import (
+from glass_ionomer.verify.admissibility import EvidenceRecord
+from glass_ionomer.verify.extraction import extract_claim
+from glass_ionomer.verify.pipeline import verify_extracted, verify_text
+from glass_ionomer.verify.status import (
     AuthorityTier,
     Claim,
     Entailment,
     EvidenceStatus,
     VerifiabilityClass,
 )
-from project_saturn.verify.verifiers import (
+from glass_ionomer.verify.verifiers import (
     ArithmeticVerifier,
     LlmAssertVerifier,
     RegistryVerifier,
