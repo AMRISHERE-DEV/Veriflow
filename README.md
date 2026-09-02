@@ -173,6 +173,8 @@ Whitepaper (preprint v1.4): Elnaggar, A. (2026). *VeriFlow: A Containment-First
 Architecture for Evidence-Gated Release of Language-Model Claims.* Zenodo.
 DOI [10.5281/zenodo.22233268](https://doi.org/10.5281/zenodo.22233268).
 
+Measurement record (frozen benchmarks, blinded holdouts, frontier-model as-filed-figure measurement, per-row receipts, hash manifests): Elnaggar, A. (2026). *Glass Ionomer (formerly VeriFlow) — Measurement Record 2026-09-03.* Zenodo. DOI [10.5281/zenodo.22260417](https://doi.org/10.5281/zenodo.22260417); replayable source at [AMRISHERE-DEV/glass-ionomer-measurement](https://github.com/AMRISHERE-DEV/glass-ionomer-measurement).
+
 ## License
 
 Apache License 2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
