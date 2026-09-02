@@ -56,6 +56,27 @@ Public pins: `tests/test_production_hardening.py` (self-hashed records cannot
 corroborate; arbitrary resolvers cannot mint provenance; source proofs bind to
 exact content); `tests/primary_core/test_resolver_contract.py`.
 
+## Class 4 - Fiscal-period label rigidity (found by blinded holdout, 2026-09-03)
+
+A blinded 25-case holdout (development round two) surfaced a false ABSTENTION:
+some filers' FY-N figure exists in EDGAR companyfacts only as comparative rows
+inside later filings (labelled fy=N+1), so strict fy-label binding returned
+UNVERIFIED for a true, consistently-filed value. Conservative direction - no
+false certification - but a real coverage boundary.
+
+Fix (v1.0.1): a fail-closed comparative fallback that runs only when zero rows
+carry the claimed fy/fp label. Candidates are full-year duration rows whose
+represented period ends in the claimed fiscal year; every candidate across all
+accessions must agree exactly (any disagreement stays CONTESTED); multiple
+distinct year-ends are ambiguous and stay unbound; quarters and instants never
+fall back. The receipt states: "Bound via comparative rows; no original-filing
+row present." The strict label doctrine remains the primary rule, and the
+wrong-period refutation behavior is pinned unchanged.
+
+Public pins: `tests/test_financial_period_fallback.py` (fallback verify /
+refute / contested; label-exists inverse guard; wrong-period still refutes;
+FY-only; ambiguous year-ends and partial-year durations fail closed).
+
 ## Scope note
 
 The audits above were author-conducted; no external party has yet audited this

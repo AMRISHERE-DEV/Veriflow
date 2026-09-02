@@ -164,6 +164,41 @@ def _period_facts(facts: list[SecFact], fy, fp) -> list[SecFact]:
     return own_period + extra
 
 
+_COMPARATIVE_RECEIPT = "Bound via comparative rows; no original-filing row present."
+# A full fiscal year's duration, with slack for 52/53-week calendars.
+_FY_DAYS_MIN, _FY_DAYS_MAX = 350, 380
+
+
+def _comparative_period_facts(facts: list[SecFact], fy, fp) -> tuple[list[SecFact], str]:
+    """Fail-closed fallback for filers whose FY-N figure exists ONLY as
+    comparative rows inside later filings (holdout finding H10, 2026-09-03).
+
+    Called ONLY when zero rows carry the claimed fy/fp label. Candidates are
+    full-year duration rows whose represented period ends in the claimed
+    fiscal year; more than one distinct year-end is ambiguous (fiscal-year
+    change) and stays unbound. Restatement discipline is unchanged: the
+    caller's distinct-value gate still turns any disagreement into CONTESTED.
+    Annual periods only; instants and quarters never fall back.
+    """
+    if _norm_fp(fp) != "FY":
+        return [], "comparative fallback applies to FY periods only"
+    want_fy = _norm_fy(fy)
+    if want_fy is None:
+        return [], "claimed fiscal year is not a valid year"
+    cands = []
+    for f in facts:
+        if not (_valid_iso_date(f.start) and _valid_iso_date(f.end)):
+            continue
+        start, end = date.fromisoformat(f.start), date.fromisoformat(f.end)
+        if end.year == want_fy and _FY_DAYS_MIN <= (end - start).days <= _FY_DAYS_MAX:
+            cands.append(f)
+    if not cands:
+        return [], "no comparative full-year row ends in the claimed fiscal year"
+    if len({f.end for f in cands}) > 1:
+        return [], "multiple distinct year-ends in the claimed fiscal year (ambiguous period) - fail closed"
+    return cands, ""
+
+
 def _valid_iso_date(value) -> bool:
     if not isinstance(value, str):
         return False
@@ -257,7 +292,13 @@ def verify_financial_claim(claim: FinancialClaim, companyfacts: dict,
 
     period = _period_facts(facts, claim.fiscal_year, claim.fiscal_period)
     if not period:
-        return unverified(f"concept present but no filed entry for {claim.fiscal_period} {claim.fiscal_year}")
+        # PRIMARY label doctrine found nothing; the fallback may bind comparative
+        # rows only when NO row anywhere carries the claimed label (fail-closed).
+        period, why = _comparative_period_facts(facts, claim.fiscal_year, claim.fiscal_period)
+        if not period:
+            return unverified(f"concept present but no filed entry for "
+                              f"{claim.fiscal_period} {claim.fiscal_year} ({why})")
+        reasons.append(_COMPARATIVE_RECEIPT)
     if any(abs(f.value) >= _EXACT_INT_LIMIT for f in period):
         return unverified("filed value too large for exact verification (>= 2**53)")
 
