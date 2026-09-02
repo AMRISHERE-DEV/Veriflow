@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "veriflow"
-version = "1.0.1"
+version = "1.0.2"
 description = "VeriFlow: claim-level evidence assurance and release gating for AI outputs."
 readme = "README.md"
 authors = [{name = "Amr Elnaggar"}]

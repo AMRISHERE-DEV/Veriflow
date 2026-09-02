@@ -144,6 +144,32 @@ class ComparativeFallbackTests(unittest.TestCase):
         pack = verify_financial_claim(claim, _facts(COMPARATIVE_ONLY), now=NOW)
         self.assertNotEqual(pack.status, "verified")
 
+    def test_offset_fiscal_calendar_cannot_mint_wrong_period_verified(self):
+        # Class 5 regression (found by tri-agent source review, 2026-09-03):
+        # a retailer-style filer's FY2024 ends 2025-02-01 (label fy=2024). With
+        # no fy=2025 rows on record, the fallback must NOT bind that own-period
+        # row to a FY2025 claim: its period already carries an authoritative
+        # label for a DIFFERENT fiscal year. Fail closed.
+        rows = [
+            {"start": "2024-02-04", "end": "2025-02-01", "val": 5000000,
+             "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+            {"start": "2023-01-29", "end": "2024-02-03", "val": 4000000,
+             "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+        ]
+        pack = verify_financial_claim(_claim(5000000, fy=2025), _facts(rows), now=NOW)
+        self.assertNotEqual(pack.status, "verified")
+        self.assertEqual(pack.status, "unverified")
+
+    def test_own_period_rows_are_never_fallback_candidates(self):
+        # A single-row accession (only its own-period row ends in the claimed
+        # year, labelled another fy) must abstain, not bind.
+        rows = [
+            {"start": "2024-02-04", "end": "2025-02-01", "val": 7777,
+             "accn": "0000999001-25-000011", "fy": 2024, "fp": "FY", "form": "10-K"},
+        ]
+        pack = verify_financial_claim(_claim(7777, fy=2025), _facts(rows), now=NOW)
+        self.assertEqual(pack.status, "unverified")
+
 
 if __name__ == "__main__":
     unittest.main()

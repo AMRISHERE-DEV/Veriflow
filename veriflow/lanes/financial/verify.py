@@ -185,10 +185,22 @@ def _comparative_period_facts(facts: list[SecFact], fy, fp) -> tuple[list[SecFac
     want_fy = _norm_fy(fy)
     if want_fy is None:
         return [], "claimed fiscal year is not a valid year"
+    # Class 5 guard (offset fiscal calendars): a filing's OWN-period row already
+    # carries an authoritative fy label for its period; since zero rows carry
+    # the claimed label, any own-period row ending in the claimed calendar year
+    # belongs to a DIFFERENT fiscal year (e.g. retailer FY2024 ending Feb 2025)
+    # and must never bind. True comparative rows always end before their
+    # accession's own period end.
+    own_end: dict[str, str] = {}
+    for f in facts:
+        if _valid_iso_date(f.end) and (f.accession not in own_end or f.end > own_end[f.accession]):
+            own_end[f.accession] = f.end
     cands = []
     for f in facts:
         if not (_valid_iso_date(f.start) and _valid_iso_date(f.end)):
             continue
+        if f.end == own_end.get(f.accession):
+            continue  # own-period row of its filing - not a comparative
         start, end = date.fromisoformat(f.start), date.fromisoformat(f.end)
         if end.year == want_fy and _FY_DAYS_MIN <= (end - start).days <= _FY_DAYS_MAX:
             cands.append(f)

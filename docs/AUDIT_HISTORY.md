@@ -77,6 +77,26 @@ Public pins: `tests/test_financial_period_fallback.py` (fallback verify /
 refute / contested; label-exists inverse guard; wrong-period still refutes;
 FY-only; ambiguous year-ends and partial-year durations fail closed).
 
+## Class 5 - Offset-fiscal-calendar false VERIFIED in the comparative fallback (found by tri-agent source review, 2026-09-03)
+
+The Class 4 fix itself contained a wrong-period path: for a filer whose fiscal
+year ends in the NEXT calendar year (e.g. retail FYE early February), the
+filing's own-period row (labelled fy=N, period ending in calendar N+1) could be
+bound by the fallback to a claim about fiscal year N+1 - a reproduced
+wrong-period false VERIFIED. Every Class 4 fixture used calendar-aligned
+fiscal years, so the pins missed it; an external tri-agent review flagged the
+calendar/fiscal-year edge and a targeted reproduction confirmed it.
+
+Fix (v1.0.2): candidates must be strict COMPARATIVE rows - any row that is its
+accession's own-period row (latest valid end in that filing) is excluded,
+because its period already carries an authoritative label for a different
+fiscal year. Legitimate comparative-row binding (rows ending before their
+filing's own period end) is unchanged.
+
+Public pins: `tests/test_financial_period_fallback.py`
+(offset_fiscal_calendar_cannot_mint_wrong_period_verified,
+own_period_rows_are_never_fallback_candidates).
+
 ## Scope note
 
 The audits above were author-conducted; no external party has yet audited this
