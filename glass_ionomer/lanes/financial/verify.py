@@ -167,6 +167,9 @@ def _period_facts(facts: list[SecFact], fy, fp) -> list[SecFact]:
 _COMPARATIVE_RECEIPT = "Bound via comparative rows; no original-filing row present."
 # A full fiscal year's duration, with slack for 52/53-week calendars.
 _FY_DAYS_MIN, _FY_DAYS_MAX = 350, 380
+# How far a comparative's end may sit from a whole number of years before its
+# filing's own period end and still count as that many fiscal years back.
+_FY_ALIGN_SLACK_DAYS = 40
 
 
 def _comparative_period_facts(facts: list[SecFact], fy, fp) -> tuple[list[SecFact], str]:
@@ -191,24 +194,48 @@ def _comparative_period_facts(facts: list[SecFact], fy, fp) -> tuple[list[SecFac
     # belongs to a DIFFERENT fiscal year (e.g. retailer FY2024 ending Feb 2025)
     # and must never bind. True comparative rows always end before their
     # accession's own period end.
+    # Class 8: a comparative row's fiscal identity is NOT its calendar year. It is
+    # inferred from the issuer's own context: the filing's fy label anchors its
+    # own period, and a comparative ending a whole number of fiscal years earlier
+    # is that many years back (FY2024 filing ending 2025-02-01 -> its comparative
+    # ending 2024-02-03 is FY2023, whatever the calendar says). Anything that
+    # does not fit that structure exactly, or on which two filings disagree,
+    # stays unbound.
     own_end: dict[str, str] = {}
+    labels: dict[str, set] = {}
     for f in facts:
         if _valid_iso_date(f.end) and (f.accession not in own_end or f.end > own_end[f.accession]):
             own_end[f.accession] = f.end
-    cands = []
+        lf = _norm_fy(f.fiscal_year)
+        if lf is not None:
+            labels.setdefault(f.accession, set()).add(lf)
+    inferred: dict[str, set] = {}      # period end -> fiscal years inferred across filings
+    rows_by_end: dict[str, list] = {}
     for f in facts:
         if not (_valid_iso_date(f.start) and _valid_iso_date(f.end)):
             continue
-        if f.end == own_end.get(f.accession):
-            continue  # own-period row of its filing - not a comparative
+        anchor_end = own_end.get(f.accession)
+        if f.end == anchor_end:
+            continue  # own-period row of its filing - not a comparative (Class 5)
+        if len(labels.get(f.accession, ())) != 1 or anchor_end is None:
+            continue  # no single authoritative anchor label for this filing
         start, end = date.fromisoformat(f.start), date.fromisoformat(f.end)
-        if end.year == want_fy and _FY_DAYS_MIN <= (end - start).days <= _FY_DAYS_MAX:
-            cands.append(f)
-    if not cands:
-        return [], "no comparative full-year row ends in the claimed fiscal year"
-    if len({f.end for f in cands}) > 1:
-        return [], "multiple distinct year-ends in the claimed fiscal year (ambiguous period) - fail closed"
-    return cands, ""
+        if not (_FY_DAYS_MIN <= (end - start).days <= _FY_DAYS_MAX):
+            continue
+        gap = (date.fromisoformat(anchor_end) - end).days
+        years_back = round(gap / 365.25)
+        if years_back < 1 or abs(gap - years_back * 365.25) > _FY_ALIGN_SLACK_DAYS:
+            continue  # not a whole number of fiscal years before the filing's own period
+        inferred.setdefault(f.end, set()).add(next(iter(labels[f.accession])) - years_back)
+        rows_by_end.setdefault(f.end, []).append(f)
+    matching_ends = [e for e, fys in inferred.items() if want_fy in fys]
+    if not matching_ends:
+        return [], "no comparative full-year row whose fiscal identity (inferred from its filing's own label) matches"
+    if any(len(inferred[e]) > 1 for e in matching_ends):
+        return [], "filings disagree about that period's fiscal identity (fiscal-year change?) - fail closed"
+    if len(matching_ends) > 1:
+        return [], "multiple distinct period ends map to the claimed fiscal year (ambiguous) - fail closed"
+    return rows_by_end[matching_ends[0]], ""
 
 
 def _valid_iso_date(value) -> bool:

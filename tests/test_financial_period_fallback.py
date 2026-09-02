@@ -160,6 +160,47 @@ class ComparativeFallbackTests(unittest.TestCase):
         self.assertNotEqual(pack.status, "verified")
         self.assertEqual(pack.status, "unverified")
 
+    # --- Class 8 (Codex review R1, 2026-09-03): comparatives must not be bound by calendar year.
+    # Retailer FYE early Feb; only the FY2024 10-K is on record. Its comparatives: FY2023 ends
+    # 2024-02-03 (val 222), FY2022 ends 2023-01-28 (val 111). No row is labelled fy=2023.
+    OFFSET_COMPARATIVES = [
+        {"start": "2024-02-04", "end": "2025-02-01", "val": 333,
+         "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+        {"start": "2023-01-29", "end": "2024-02-03", "val": 222,
+         "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+        {"start": "2022-01-30", "end": "2023-01-28", "val": 111,
+         "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+    ]
+
+    def test_genuine_comparative_cannot_verify_wrong_fiscal_year(self):
+        # FY2022's value (ends in calendar 2023) must NOT verify as FY2023.
+        pack = verify_financial_claim(_claim(111, fy=2023), _facts(self.OFFSET_COMPARATIVES), now=NOW)
+        self.assertNotEqual(pack.status, "verified")
+
+    def test_correct_fiscal_value_cannot_be_refuted_using_previous_year(self):
+        # The TRUE FY2023 value must not be refuted by binding the FY2022 row.
+        pack = verify_financial_claim(_claim(222, fy=2023), _facts(self.OFFSET_COMPARATIVES), now=NOW)
+        self.assertNotEqual(pack.status, "refuted")
+        # and with fiscal identity inferred from the filing's own label, it verifies
+        self.assertEqual(pack.status, "verified")
+        self.assertEqual(pack.matched_fact.end, "2024-02-03")
+
+    def test_fiscal_year_change_makes_comparative_identity_ambiguous(self):
+        # Two filings whose own-label anchors disagree about the same comparative period
+        # (a fiscal-year change) -> identity cannot be established -> abstain.
+        rows = [
+            {"start": "2023-01-29", "end": "2024-02-03", "val": 222,
+             "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+            {"start": "2024-02-04", "end": "2025-02-01", "val": 333,
+             "accn": "0000999001-25-000010", "fy": 2024, "fp": "FY", "form": "10-K"},
+            {"start": "2023-01-29", "end": "2024-02-03", "val": 222,
+             "accn": "0000999001-26-000010", "fy": 2026, "fp": "FY", "form": "10-K"},
+            {"start": "2025-02-02", "end": "2025-12-31", "val": 444,
+             "accn": "0000999001-26-000010", "fy": 2026, "fp": "FY", "form": "10-K"},
+        ]
+        pack = verify_financial_claim(_claim(222, fy=2023), _facts(rows), now=NOW)
+        self.assertEqual(pack.status, "unverified")
+
     def test_own_period_rows_are_never_fallback_candidates(self):
         # A single-row accession (only its own-period row ends in the claimed
         # year, labelled another fy) must abstain, not bind.

@@ -129,6 +129,28 @@ ratification item for the kernel benchmark, not changed silently.
 
 Public pins: `tests/test_entity_binding.py`.
 
+## Class 8 - Comparative rows bound by calendar year, not fiscal identity (found by external Codex review, 2026-09-03)
+
+The Class 5 guard excluded a filing's own-period row but left the calendar
+assumption in place for genuine comparatives: selection still tested whether
+the period END fell in the claimed calendar year. For an offset fiscal calendar
+(retail FYE early February), the FY2022 comparative ends in calendar 2023, so a
+FY2023 claim carrying FY2022's value was VERIFIED and the true FY2023 value was
+REFUTED - both wrong-period decisions, reproduced on v1.1.2.
+
+Fix (v1.1.3): a comparative's fiscal identity is inferred from the issuer's own
+context, never from the calendar: the filing's fy label anchors its own period,
+and a comparative ending a whole number of fiscal years earlier (within a
+52/53-week slack) is that many years back. Rows that do not fit that structure
+stay unbound; if two filings disagree about the same period's identity (a
+fiscal-year change), the lane abstains. Calendar-aligned filers (ACRES) and the
+Class 5 own-period guard are unchanged.
+
+Public pins: `tests/test_financial_period_fallback.py`
+(genuine_comparative_cannot_verify_wrong_fiscal_year,
+correct_fiscal_value_cannot_be_refuted_using_previous_year,
+fiscal_year_change_makes_comparative_identity_ambiguous).
+
 ## Scope note
 
 The audits above were author-conducted; no external party has yet audited this
